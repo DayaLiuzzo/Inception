@@ -2,16 +2,16 @@ start:
 	docker compose up --build -d
 
 stop:
-	docker compose down 
+	docker compose down -v
 
 enter_mariadb:
-	docker compose exec mariadb /bin/bash
+	docker compose exec mariadb mysql -u root -p
 
 enter_wordpress:
-	docker compose exec enter_wordpress /bin/sh
+	docker compose exec wordpress /bin/sh
 
 enter_nginx:
-	docker compose exec enter_ngnx /bin/bash
+	docker compose exec nginx /bin/bash
 
 build_nginx:
 	docker compose up --force-recreate --build -d nginx
@@ -23,3 +23,6 @@ build_mariadb:
 	docker compose up --force-recreate --build -d mariadb
 logs:
 	docker compose logs
+
+clean:
+	sudo rm -rf database web
