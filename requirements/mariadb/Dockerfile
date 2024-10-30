@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:bullseye
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -11,4 +11,4 @@ COPY script.sh .
 
 RUN mkdir /run/mysqld && chmod +x script.sh
 
-CMD ["./script.sh"]
+ENTRYPOINT ["./script.sh", "mysqld_safe"]

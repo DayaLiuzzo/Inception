@@ -1,14 +1,15 @@
-FROM debian:latest
+FROM alpine:3.19.4
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y \
+RUN apk update && \
+    apk upgrade -y && \
+    apk  add \
     php-fpm \
+    php \
     php-mysqli\
-    curl && \
-    apt-get clean
+    curl
 
 COPY www.conf /etc/php/8.2/fpm/pool.d/.
 COPY script.sh .
 RUN chmod +x script.sh
-CMD ["./script.sh"]
+
+ENTRYPOINT ["./script.sh", "php-fpm8.2", "-F"]
