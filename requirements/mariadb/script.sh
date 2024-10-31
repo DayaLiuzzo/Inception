@@ -2,4 +2,4 @@
 
 mysql_install_db
 
-"$@"
+exec "$@"

@@ -12,6 +12,7 @@ RUN apk update && \
     php-mbstring \
     curl 
 
+RUN adduser -D -G www-data www-data
     
 COPY www.conf /etc/php82/php-fpm.d/.
 
@@ -21,4 +22,5 @@ RUN chmod +x script.sh
 
 # CMD ["./script.sh"]
 ENTRYPOINT ["./script.sh", "php-fpm82", "-F"]
+
 # ENTRYPOINT ["tail", "-f", "/dev/null"]
