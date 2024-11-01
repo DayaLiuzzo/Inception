@@ -8,7 +8,7 @@ stop:
 	docker compose down -v
 
 enter_mariadb:
-	docker compose exec mariadb mysql -u root -p
+	docker compose exec mariadb /bin/bash
 
 enter_wordpress:
 	docker compose exec wordpress /bin/sh

@@ -19,6 +19,7 @@ COPY www.conf /etc/php82/php-fpm.d/.
 COPY script.sh .
 RUN chmod +x script.sh
 
+EXPOSE 9000
 
 # CMD ["./script.sh"]
 ENTRYPOINT ["./script.sh", "php-fpm82", "-F"]
