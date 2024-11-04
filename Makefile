@@ -35,5 +35,12 @@ create_dirs:
 
 clean:
 	@echo "Cleaning up volume stored at /home/dliuzzo/data..."
+	@-docker rmi $$(docker images -q) 2>/dev/null
+	docker image prune -f
+	docker container prune -f
+	docker volume prune -f
+	docker network prune -f
+	docker system prune -f --volumes
+	sudo rm -rf $(data)
 	@sudo rm -rf /home/dliuzzo/data/*
 	@echo "Cleanup completed."

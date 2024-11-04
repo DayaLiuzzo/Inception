@@ -10,9 +10,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /home/dliuzzo/data/wordpress:/var/www/html
+      - wordpress:/var/www/html
     networks:
-      inception:
+      - inception
   wordpress:
     build: requirements/wordpress/.
     container_name: wp-php
@@ -21,17 +21,33 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - /home/dliuzzo/data/wordpress:/var/www/html 
+      - wordpress:/var/www/html 
     networks:
-      inception:
+      - inception
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
     env_file:
       - .env
-    volumes:
-      - /home/dliuzzo/data/mariadb:/var/lib/mysql
+    # volumes:
+    #   - mariadb:/var/lib/mysql
+    expose:
+      - "3306"
     networks:
-      inception:
+      - inception
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/dliuzzo/data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/dliuzzo/data/mariadb'
 networks:
   inception:
+    driver: bridge
