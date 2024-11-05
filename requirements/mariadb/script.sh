@@ -2,6 +2,8 @@
 
 /etc/init.d/mariadb start
 
+sleep 5
+
 mysql_secure_installation << EOF
 $DB_ROOTPASS
 Y
@@ -12,23 +14,20 @@ Y
 Y
 EOF
 
-# mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
-# mysql -e "CREATE USER IF NOT EXISTS \`${DB_USERNAME}\`@'localhost' IDENTIFIED BY '${DB_USERPASS}';"
-# mysql -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${DB_USERNAME}\`@'%' IDENTIFIED BY '${DB_USERPASS}';"
-# mysql -e "FLUSH PRIVILEGES;"
-echo "CREATING DATABASE"
+
+# echo "CREATING DATABASE"
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
-echo "CREATING USER"
+# echo "CREATING USER"
 mysql -e "CREATE USER IF NOT EXISTS \`${DB_USERNAME}\`@'localhost' IDENTIFIED BY '${DB_USERPASS}';"
-echo "GRANTING PRIVILEGES"
+# echo "GRANTING PRIVILEGES"
 mysql -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${DB_USERNAME}\`@'%' IDENTIFIED BY '${DB_USERPASS}';"
-echo "FLUSHING"
+# echo "FLUSHING"
 mysql -e "FLUSH PRIVILEGES;"
 # echo "ALTERING USER"
 # mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_USERPASS}';"
 
-echo "CMDS DONE"
+# echo "CMDS DONE"
 /etc/init.d/mariadb stop
-echo "here1"
+# echo "here1"
 
 exec "$@"
