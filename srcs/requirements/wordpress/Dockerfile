@@ -14,9 +14,9 @@ RUN apk update && \
 
 RUN adduser -D -G www-data www-data
     
-COPY www.conf /etc/php82/php-fpm.d/.
+COPY ./conf/www.conf /etc/php82/php-fpm.d/.
 
-COPY script.sh .
+COPY ./tools/script.sh .
 RUN chmod +x script.sh
 
 EXPOSE 9000
