@@ -42,12 +42,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/dliuzzo/data/wordpress'
-  mariadb:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/dliuzzo/data/mariadb'
+  # mariadb:
+  #   driver: local
+  #   driver_opts:
+  #     type: 'none'
+  #     o: 'bind'
+  #     device: '/home/dliuzzo/data/mariadb'
 networks:
   inception:
     driver: bridge
