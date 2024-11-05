@@ -12,8 +12,8 @@ RUN mkdir -p /run/mysqld && \
     chown -R mysql:mysql /run/mysqld && \
     chmod 755 /run/mysqld
 
-COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY script.sh .
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./tools/script.sh .
 RUN chmod +x script.sh
 
 ENTRYPOINT [ "./script.sh" ]
