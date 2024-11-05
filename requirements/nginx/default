@@ -19,8 +19,8 @@
 # Default server configuration
 #
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+	listen 443 ssl;
+	listen [::]:443 ssl;
 
 	# SSL configuration
 	ssl_protocols TLSv1.2 TLSv1.3;
@@ -37,13 +37,14 @@ server {
 	# Don't use them in a production server!
 	#
 	# include snippets/snakeoil.conf;
-
+	ssl_certificate /etc/nginx/ssl/inception.crt;
+	ssl_certificate_key /etc/nginx/ssl/inception.key;
 	root /var/www/html;
 
 	# Add index.php to the list if you are using PHP
 	index index.php index.html index.htm index.nginx-debian.html;
 
-	server_name _;
+	server_name dliuzzo.42.fr;
 
 	location / {
 		# First attempt to serve request as file, then
