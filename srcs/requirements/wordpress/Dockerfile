@@ -21,7 +21,4 @@ RUN chmod +x script.sh
 
 EXPOSE 9000
 
-# CMD ["./script.sh"]
 ENTRYPOINT ["./script.sh", "php-fpm82", "-F"]
-
-# ENTRYPOINT ["tail", "-f", "/dev/null"]

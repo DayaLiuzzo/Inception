@@ -1,36 +1,35 @@
+all: create_dirs start 
+
 start:
 	docker compose -f srcs/docker-compose.yml up --build -d
 
-
-re: clean create_dirs start
+re: clean all
 
 stop:
-	docker compose -f srcs/docker-compose.yml down -v
+	docker compose -f srcs/docker-compose.yml down 
 
 enter_mariadb:
-	docker compose exec mariadb /bin/bash /srcs/docker-compose.yml
+	docker exec -it mariadb bash
 
 enter_wordpress:
-	docker compose exec wordpress /bin/sh /srcs/docker-compose.yml
+	docker exec -it wordpress sh
 
 enter_nginx:
-	docker compose exec nginx /bin/bash /srcs/docker-compose.yml
+	docker exec -it nginx bash
 
-build_nginx:
-	docker compose up --force-recreate --build -d nginx /srcs/docker-compose.yml
-
-build_wordpress:
-	docker compose up --force-recreate --build -d  wordpress /srcs/docker-compose.yml
-
-build_mariadb:
-	docker compose up --force-recreate --build -d mariadb /srcs/docker-compose.yml
 logs:
 	docker compose -f srcs/docker-compose.yml logs
 
 create_dirs:
 	@echo "Creating necessary directories..."
-	@mkdir -p /home/dliuzzo/data/wordpress
-	@mkdir -p /home/dliuzzo/data/mariadb
+	@if [ ! -d /home/dliuzzo/data/wordpress ]; then \
+		mkdir -p /home/dliuzzo/data/wordpress; \
+	fi
+
+	@if [ ! -d /home/dliuzzo/data/mariadb ]; then \
+		mkdir -p /home/dliuzzo/data/mariadb; \
+	fi
+
 	@echo "Directories created."
 
 clean:

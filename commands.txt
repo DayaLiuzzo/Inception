@@ -1,0 +1,5 @@
+docker exec -it mariadb bash
+SHOW DATABASES;
+USE wordpress;
+SELECT * FROM wp_users;
+SELECT * FROM wp_comments;
