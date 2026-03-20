@@ -63,6 +63,18 @@ server {
 		fastcgi_pass wp-php:9000;
 	}
 
+	location /phpmyadmin/ {
+        alias /var/www/phpmyadmin/;
+        index index.php;
+
+        location ~ \.php$ {
+            fastcgi_pass phpmyadmin:9001;
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME /var/www/phpmyadmin$fastcgi_script_name;
+        }
+    }
+
 	# deny access to .htaccess files, if Apache's document root
 	# concurs with nginx's one
 	#

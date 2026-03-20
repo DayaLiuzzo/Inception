@@ -38,6 +38,18 @@ services:
       - "3306"
     networks:
       - inception
+  phpmyadmin:
+    build: requirements/phpmyadmin/.
+    container_name: phpmyadmin
+    image: phpmyadmin
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    expose:
+      - "9001"
+    networks:
+      - inception
 volumes:
   wordpress:
     driver: local
