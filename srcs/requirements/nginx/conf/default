@@ -21,15 +21,9 @@ server {
 	}
 
 
-    	location /phpmyadmin {
-        	root /var/www;
-        	index index.php index.html;
-
-        	location ~ ^/phpmyadmin/(.+\.php)$ {
-            		fastcgi_pass phpmyadmin:9001;
-            		fastcgi_index index.php;
-            		include fastcgi_params;
-            	fastcgi_param SCRIPT_FILENAME /var/www/phpmyadmin/$1;
-        	}
-    	}	
+	location /phpmyadmin/ {
+		proxy_pass http://phpmyadmin:80/;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+	}
 }
