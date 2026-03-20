@@ -40,9 +40,8 @@ services:
     networks:
       - inception
   phpmyadmin:
-    build: requirements/phpmyadmin/.
+    image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
-    image: phpmyadmin
     env_file:
       - .env
     depends_on:
