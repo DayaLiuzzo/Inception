@@ -14,12 +14,16 @@ RUN apk update && apk add \
     wget \
     tar
 
-RUN wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz \
-    && tar -xzf phpMyAdmin-latest-all-languages.tar.gz \
-    && mv phpMyAdmin-*-all-languages /var/www/phpmyadmin \
-    && rm phpMyAdmin-latest-all-languages.tar.gz
+RUN mkdir -p /var/www && \
+    wget https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAdmin-5.2.3-all-languages.tar.gz \
+    && tar -xzf phpMyAdmin-5.2.3-all-languages.tar.gz \
+    && ls -la \
+    && mv phpMyAdmin-5.2.3-all-languages /var/www/phpmyadmin \
+    && rm phpMyAdmin-5.2.3-all-languages.tar.gz
+
 
 COPY conf/config.inc.php /var/www/phpmyadmin/
+COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 EXPOSE 9001
 CMD ["php-fpm82", "-F"]
