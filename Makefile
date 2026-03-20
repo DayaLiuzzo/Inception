@@ -1,45 +1,55 @@
-all: create_dirs start 
+# ============================================================
+# INCEPTION MAKEFILE
+# ============================================================
+
+COMPOSE_FILE	= srcs/docker-compose.yml
+
+# ============================================================
+
+all: start
 
 start:
-	docker compose -f srcs/docker-compose.yml up --build -d
+	docker compose -f $(COMPOSE_FILE) up -d
 
-re: clean all
+build:
+	docker compose -f $(COMPOSE_FILE) up --build -d
 
 stop:
-	docker compose -f srcs/docker-compose.yml down 
+	docker compose -f $(COMPOSE_FILE) down
+
+re: clean build
+
+logs:
+	docker compose -f $(COMPOSE_FILE) logs -f
+
+# ============================================================
+# SHELL ACCESS
+# ============================================================
 
 enter_mariadb:
 	docker exec -it mariadb bash
 
 enter_wordpress:
-	docker exec -it wordpress sh
+	docker exec -it wp-php sh
 
 enter_nginx:
 	docker exec -it nginx bash
 
-logs:
-	docker compose -f srcs/docker-compose.yml logs
-
-create_dirs:
-	@echo "Creating necessary directories..."
-	@if [ ! -d /home/dliuzzo/data/wordpress ]; then \
-		mkdir -p /home/dliuzzo/data/wordpress; \
-	fi
-
-	@if [ ! -d /home/dliuzzo/data/mariadb ]; then \
-		mkdir -p /home/dliuzzo/data/mariadb; \
-	fi
-
-	@echo "Directories created."
+# ============================================================
+# CLEANUP
+# ============================================================
 
 clean:
-	@echo "Cleaning up volume stored at /home/dliuzzo/data..."
-	@-docker rmi $$(docker images -q) 2>/dev/null
-	docker image prune -f
-	docker container prune -f
-	docker volume prune -f
-	docker network prune -f
-	docker system prune -f --volumes
-	sudo rm -rf $(data)
+	@echo "Stopping containers..."
+	@docker compose -f $(COMPOSE_FILE) down --remove-orphans 2>/dev/null || true
+	@echo "Removing images..."
+	@docker rmi $$(docker images -q) 2>/dev/null || true
+	@docker image prune -f
+	@docker container prune -f
+	@docker volume prune -f
+	@docker network prune -f
+	@docker system prune -f --volumes
 	@sudo rm -rf /home/dliuzzo/data/*
 	@echo "Cleanup completed."
+
+.PHONY: all start build stop re logs enter_mariadb enter_wordpress enter_nginx clean
